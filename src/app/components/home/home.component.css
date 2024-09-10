@@ -1,0 +1,13 @@
+.home-container {
+  height: 100%;
+}
+
+.main-container {
+  height: 100%;
+}
+
+h1 {
+  font-size: 2rem;
+  color: white;
+  text-align: center;
+}

@@ -1,0 +1,8 @@
+.navbar-container {
+    background-color: #00bfa6;
+}
+
+.logout-btn, .navbar-logo {
+    border: none;
+    background-color: transparent;
+}

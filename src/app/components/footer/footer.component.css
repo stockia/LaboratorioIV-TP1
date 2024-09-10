@@ -1,0 +1,25 @@
+.footer-container {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.footer-icon, .user-icon {
+  font-size: 1.5rem;
+  transition: color 0.7s ease;
+}
+
+.user-icon-btn {
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+
+.footer-icon:hover {
+  color: #007bff;
+}
+
+.user-icon:hover {
+  color: #28a745;
+}

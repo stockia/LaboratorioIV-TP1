@@ -1,0 +1,18 @@
+.about-container {
+  height: 100%;
+}
+
+.columna-a {
+    background-color: #333;
+    padding-bottom: 1.5rem;
+}
+
+.card {
+  background-color: #333;
+  color: white;
+  border: none;
+}
+
+.user-img {
+    mask-image: linear-gradient(black 80%, transparent);
+}
