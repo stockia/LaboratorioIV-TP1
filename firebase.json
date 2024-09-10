@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/juegardopolis/browser",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
