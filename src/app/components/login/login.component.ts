@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { addDoc, collection, collectionData, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -10,44 +12,47 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
-  isLoggedIn: boolean = false;
+  userMail: string = '';
+  userPwd: string = '';
   isLoading: boolean = false;
 
-  constructor(private router: Router) {
-    this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  constructor(private router: Router, public auth: Auth, private firestore: Firestore) {
   }
 
-  login(username: string, password: string) {
-    this.username = username;
-    this.password = password;
+  async login() {
+    signInWithEmailAndPassword(this.auth, this.userMail, this.userPwd)
+    .then(res => {
+      this.registerLogin();
+      this.goTo('home');
+      console.log(`Usuario logueado: ${this.auth.currentUser?.email}`);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
 
-    if (this.validate(this.username, this.password)) {
-      setTimeout(() => {
-        this.isLoading = true;
-      });
+  async registerLogin() {
+    try {
+      this.isLoading = true;
+      let collectionDB = collection(this.firestore, 'logins');
+      await addDoc(collectionDB, { fecha: new Date(), 'user': this.userMail });
       this.isLoading = false;
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('username', username);
+    } catch (error) {
+      console.log(error);
     }
-
-    this.goTo('home');
   }
 
-  signUp(username: string, password: string) {
-    // a definir
-  }
-
-  // valida de forma ficticia el username y password
-  validate(username: string, password: string) {
-    return username === 'superUser' && password === '12345';
+  signUp() {
+    this.goTo('register');
   }
 
   // funcion con propositos de test
   autocomplete() {
-    this.username = 'superUser';
-    this.password = '12345';
+    this.userMail = 'invitado@juegardopolis.com';
+    this.userPwd = 'hola12345';
+    // otro user
+    // this.userMail = 'admin@utn.com';
+    // this.userPwd = 'admin12345';
   }
 
   goTo(path: string) {

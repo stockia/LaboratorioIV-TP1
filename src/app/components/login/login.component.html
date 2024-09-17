@@ -3,15 +3,22 @@
     <h2>Iniciar sesión</h2>
     <div class="form-group">
       <label for="username">Nombre de usuario:</label>
-      <input type="text" id="username" name="username" required [(ngModel)]="username">
+      <input type="text" id="username" name="username" required [(ngModel)]="userMail">
     </div>
     <div class="form-group">
       <label for="password">Contraseña:</label>
-      <input type="password" id="password" name="password" required [(ngModel)]="password">
+      <input type="password" id="password" name="password" required [(ngModel)]="userPwd">
     </div>
     <div class="button-group">
-      <button type="submit" (click)="login(username, password)" class="btn btn-primary">Ingresar</button>
-      <button type="button" class="btn btn-success">Registrarse</button>
+      <button type="submit" (click)="login()" class="btn btn-primary">Ingresar</button>
+      @if (isLoading) {
+        <button class="btn btn-primary" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span class="sr-only">Iniciando sesión...</span>
+        </button>
+      }
+
+      <button type="button" (click)="signUp()" class="btn btn-success">Registrarse</button>
     </div>
     <div class="button-group button-group-auto">
       <button type="button" (click)="autocomplete()" class="btn btn-secondary">Autocompletar</button>
