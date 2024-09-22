@@ -1,0 +1,17 @@
+.chat-btn-container {
+    position: fixed;
+	right: 32px;
+	bottom: 10vh;
+}
+
+.chat-closed-icon {
+    width: 48px; height: 48px;
+}
+
+.chat-open {
+    width: 320px; max-height: 80vh;
+}
+
+.message-bubble {
+    max-width: 80%;
+}

@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { GameCardComponent } from '../game-card/game-card.component';
 import { FooterComponent } from '../footer/footer.component';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [NavbarComponent, GameCardComponent, FooterComponent, CommonModule],
+  imports: [NavbarComponent, GameCardComponent, FooterComponent, ChatComponent, CommonModule],
 })
 export class HomeComponent implements OnInit {
   username: string = '';

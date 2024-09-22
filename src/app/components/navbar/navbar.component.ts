@@ -14,11 +14,14 @@ export class NavbarComponent {
   constructor(private router: Router, public auth: Auth){}
 
   logout() {
-    console.log(`Estaba logueado: ${this.auth.currentUser?.email}`);
     signOut(this.auth)
     .then(res => {
       this.goTo('login');
     })
+  }
+
+  get isLoggedIn(): boolean {
+    return this.auth.currentUser !== null;
   }
 
   goTo(path: string) {

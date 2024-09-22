@@ -6,3 +6,11 @@
     border: none;
     background-color: transparent;
 }
+
+.logout-btn {
+    transition: 0.5s;
+}
+
+.logout-btn:hover {
+    color: whitesmoke;
+}

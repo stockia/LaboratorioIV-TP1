@@ -19,7 +19,7 @@ export class RegisterComponent {
 
   constructor(private router: Router, public auth: Auth) {}
 
-  Register() {
+  register() {
     this.flagError = false;
     this.isLoading = true;
     createUserWithEmailAndPassword(this.auth, this.newUserMail, this.newUserPwd)

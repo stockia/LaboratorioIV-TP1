@@ -15,6 +15,8 @@ export class LoginComponent {
   userMail: string = '';
   userPwd: string = '';
   isLoading: boolean = false;
+  flagError: boolean = false;
+  msjError: string = '';
 
   constructor(private router: Router, public auth: Auth, private firestore: Firestore) {
   }
@@ -24,11 +26,29 @@ export class LoginComponent {
     .then(res => {
       this.registerLogin();
       this.goTo('home');
-      console.log(`Usuario logueado: ${this.auth.currentUser?.email}`);
     })
     .catch(error => {
-      console.log(error);
-    })
+      this.flagError = true;
+
+      switch (error.code) {
+        case "auth/invalid-email":
+          console.log("Email invalido");
+          this.msjError = "Email invalido";
+          break;
+        case "auth/invalid-credential":
+          console.log("Usuario o contraseña incorrectos");
+          this.msjError = "Usuario o contraseña incorrectos";
+          break;
+        case "auth/wrong-password":
+          console.log("Contraseña incorrecta");
+          this.msjError = "Contraseña incorrecta";
+          break;
+        default:
+          console.log(error.code);
+          this.msjError = error.code;
+          break;
+      }
+    });
   }
 
   async registerLogin() {

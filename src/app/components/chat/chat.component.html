@@ -1,0 +1,51 @@
+<div class="chat-btn-container">
+  <button
+    *ngIf="!isOpen"
+    (click)="toggleChat()"
+    class="btn btn-primary rounded-circle p-0 chat-closed-icon"
+  >
+    <i class="bi bi-chat-dots-fill"></i>
+  </button>
+
+  <div
+    *ngIf="isOpen"
+    class="bg-white border rounded shadow-lg d-flex flex-column chat-open"
+  >
+    <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+      <h3 class="fw-semibold">Chat Mini</h3>
+      <button (click)="toggleChat()" class="btn btn-link">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+
+    <div class="flex-grow-1 p-2 overflow-auto">
+      <div *ngFor="let message of messages">
+        <small class="text-muted">{{ message.user }} - {{ message.time.toLocaleString() }}</small>
+        <div
+          class="mb-2 p-2 rounded message-bubble"
+          [ngClass]="{
+            'bg-primary text-white ms-auto text-end': message.user === currentUser,
+            'bg-light text-dark text-start': message.user !== currentUser
+          }"
+        >
+          {{ message.message }}
+        </div>
+      </div>
+    </div>
+
+    <form (submit)="sendMessage()" class="p-2 border-top">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Escribe un mensaje..."
+          [(ngModel)]="newMessage"
+          name="message"
+          required
+        />
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+    </form>
+  </div>
+</div>
+  

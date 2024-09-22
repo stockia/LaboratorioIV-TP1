@@ -14,10 +14,11 @@
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           <span class="sr-only">Registrando...</span>
         </button>
+      } @else {
+        <div class="button-group">
+          <button type="submit" (click)="register()" class="btn btn-primary">Registrarse</button>
+        </div>
       }
-      <div class="button-group">
-        <button type="submit" (click)="Register()" class="btn btn-primary">Registrarse</button>
-      </div>
       @if (flagError){
         <div class="error-line">
           <p class="text-center text-alert">{{msjError}}</p>

@@ -1,0 +1,13 @@
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  }
+  
+  .position-absolute.top-2.end-2 {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .bg-gradient {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  }

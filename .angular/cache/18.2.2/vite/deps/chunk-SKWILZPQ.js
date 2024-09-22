@@ -5,11 +5,20 @@ import {
   Injector,
   NgModule,
   NgZone,
-  Observable,
   Optional,
   PLATFORM_ID,
   VERSION,
   Version,
+  makeEnvironmentProviders,
+  queueScheduler,
+  setClassMetadata,
+  ɵɵdefineInjectable,
+  ɵɵdefineInjector,
+  ɵɵdefineNgModule,
+  ɵɵinject
+} from "./chunk-EKNKJDXO.js";
+import {
+  Observable,
   __async,
   __spreadProps,
   __spreadValues,
@@ -17,18 +26,11 @@ import {
   concatMap,
   distinct,
   from,
-  makeEnvironmentProviders,
   observeOn,
-  queueScheduler,
-  setClassMetadata,
   subscribeOn,
   tap,
-  timer,
-  ɵɵdefineInjectable,
-  ɵɵdefineInjector,
-  ɵɵdefineNgModule,
-  ɵɵinject
-} from "./chunk-XNSWX3JV.js";
+  timer
+} from "./chunk-3MFW7UDR.js";
 
 // node_modules/@firebase/util/dist/index.esm2017.js
 var stringToByteArray$1 = function(str) {
@@ -2926,4 +2928,4 @@ firebase/app/dist/esm/index.esm.js:
    * limitations under the License.
    *)
 */
-//# sourceMappingURL=chunk-7CR6DJSV.js.map
+//# sourceMappingURL=chunk-SKWILZPQ.js.map

@@ -17,9 +17,13 @@
           <span class="sr-only">Iniciando sesión...</span>
         </button>
       }
-
       <button type="button" (click)="signUp()" class="btn btn-success">Registrarse</button>
     </div>
+    @if (flagError){
+      <div class="error-line">
+        <p class="text-center text-alert">{{msjError}}</p>
+      </div>
+    }
     <div class="button-group button-group-auto">
       <button type="button" (click)="autocomplete()" class="btn btn-secondary">Autocompletar</button>
     </div>

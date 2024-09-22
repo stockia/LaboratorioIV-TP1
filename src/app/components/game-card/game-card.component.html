@@ -1,10 +1,18 @@
-
-  <div class="col" id={{key}}>
-    <div class="card h-100">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{title}}</h5>
-        <p class="card-text">{{description}}</p>
-      </div>
+<div class="d-flex align-items-center justify-content-center p-4">
+  <div class="card text-white bg-dark border-0 shadow-lg" style="max-width: 400px; transition: transform 0.3s, box-shadow 0.3s;">
+    <div class="position-relative">
+      <img
+        [src]="imageUrl"
+        [alt]="title"
+        class="card-img-top"
+        style="height: 256px; object-fit: cover;"
+      />
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-gradient" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);"></div>
+      <span class="badge bg-warning text-dark position-absolute top-2 end-2 fs-6 fw-bold">{{ year }}</span>
     </div>
+    <div class="card-body bg-secondary">
+      <h2 class="card-title h4 text-warning fw-bold mb-3">{{ title }}</h2>
+      <p class="card-text text-light">{{ description }}</p>
+    </div>
+  </div>
   </div>

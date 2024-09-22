@@ -2,7 +2,11 @@
   background-color: #333;
   color: white;
   text-align: center;
-  padding: 10px 0;
+  height: 10vh;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 .footer-icon, .user-icon {

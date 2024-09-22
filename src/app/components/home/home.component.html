@@ -1,10 +1,11 @@
 <div class="flex flex-col min-h-screen home-container">
   <main class="flex-1 container py-6 main-container">
-    <h1 class="text-3xl font-bold mb-6">Selecciona un juego</h1>
+    <h1 class="text-3xl font-bold mb-6 mt-5">Juegos</h1>
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <ng-container *ngFor="let game of games">
         <app-game-card [gameData]="game"></app-game-card>
       </ng-container>
     </div>
+    <app-chat></app-chat>
   </main>
 </div>
