@@ -14,11 +14,35 @@ import { ChatComponent } from '../chat/chat.component';
 })
 export class HomeComponent implements OnInit {
   username: string = '';
-  games: { id: number, title: string, description: string }[] = [
-    { id: 1, title: 'Game 1', description: 'Description 1' },
-    { id: 2, title: 'Game 2', description: 'Description 2' },
-    { id: 3, title: 'Game 3', description: 'Description 3' },
-    { id: 4, title: 'Game 4', description: 'Description 4' }
+  games: { id: number, title: string, description: string, gameLink: string, imgUrl: string}[] = [
+    { 
+      id: 1,
+      title: 'Ahorcado', 
+      description: 'Descubre la palabra secreta antes de acabar tus vidas', 
+      gameLink: '/games/ahorcado',
+      imgUrl: '../../assets/games/hangman.webp'  
+    },
+    { 
+      id: 2, 
+      title: 'Mayor o Menor', 
+      description: 'Description 2', 
+      gameLink: '/games/mayor-menor',
+      imgUrl: '../../assets/games/h_or_l.webp',
+    },
+    { 
+      id: 3, 
+      title: 'Preguntados', 
+      description: 'Description 3', 
+      gameLink: '',
+      imgUrl: '../../assets/games/preguntados.webp',
+    },
+    { 
+      id: 4, 
+      title: 'Juego Propio', 
+      description: 'Description 4', 
+      gameLink: '',
+      imgUrl: '../../assets/games/own_game.webp',
+    }
   ];
 
   constructor() { }

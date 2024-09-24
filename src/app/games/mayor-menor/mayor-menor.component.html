@@ -1,0 +1,31 @@
+<div class="container text-center mt-5">
+    <h1>Juego Mayor o Menor</h1>
+  
+    <div class="my-4">
+      <p class="h4">Carta Actual:</p>
+      <div class="card mx-auto" style="width: 100px; height: 150px;">
+        <div class="card-body d-flex align-items-center justify-content-center">
+          <span class="h3">{{ currentCard }}</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="my-4" *ngIf="!gameOver">
+      <p class="h4">¿La siguiente carta será mayor o menor?</p>
+      <button class="btn btn-primary m-2" (click)="guess(true)">Mayor</button>
+      <button class="btn btn-primary m-2" (click)="guess(false)">Menor</button>
+    </div>
+  
+    <div class="my-4">
+      <p class="h5">{{ message }}</p>
+    </div>
+  
+    <div class="my-4">
+      <p class="h4">Puntos: {{ points }}</p>
+    </div>
+  
+    <div class="my-4">
+      <button class="btn btn-secondary" (click)="startGame()">Reiniciar Juego</button>
+    </div>
+  </div>
+  

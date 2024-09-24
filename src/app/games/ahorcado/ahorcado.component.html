@@ -1,0 +1,39 @@
+<div class="container text-center mt-5">
+    <h1>Ahorcado</h1>
+    <div class="my-4">
+      <h2>
+        <span *ngFor="let letter of displayWord">{{ letter }} </span>
+      </h2>
+    </div>
+  
+    <div class="my-4">
+      <p>Intentos incorrectos: {{ incorrectGuesses }} / {{ maxIncorrectGuesses }}</p>
+    </div>
+  
+    <div class="my-4">
+      <div class="d-flex flex-wrap justify-content-center">
+        <button
+          *ngFor="let letter of alphabet"
+          class="btn btn-outline-primary m-1"
+          [disabled]="guessedLetters.includes(letter) || isGameOver() || isGameWon()"
+          (click)="guessLetter(letter)"
+        >
+          {{ letter }}
+        </button>
+      </div>
+    </div>
+  
+    <div class="my-4">
+      <div *ngIf="isGameWon()" class="alert alert-success">
+        ¡Felicidades! Has ganado.
+      </div>
+      <div *ngIf="isGameOver()" class="alert alert-danger">
+        ¡Has perdido! La palabra era: {{ wordToGuess }}
+      </div>
+    </div>
+  
+    <div class="my-4">
+      <button class="btn btn-secondary" (click)="initializeGame()">Reiniciar Juego</button>
+    </div>
+  </div>
+  <app-chat></app-chat>

@@ -1,13 +1,40 @@
 .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-  }
-  
-  .position-absolute.top-2.end-2 {
-    top: 0.5rem;
-    right: 0.5rem;
-  }
-  
-  .bg-gradient {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  }
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+.position-absolute.top-2.end-2 {
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.bg-gradient {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+}
+
+.card-container {
+  max-width: 300px; 
+  transition: transform 0.5s, box-shadow 0.3s;
+  border: 14px;
+}
+
+.card-img {
+  height: 300px; 
+  width: 300px;
+  object-fit: cover;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.card-container-bottom {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+h2, p {
+  text-decoration: none;
+}

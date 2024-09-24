@@ -13,16 +13,9 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'register', component: RegisterComponent },
-  // {
-  //     path: 'products', component: ProductsComponent,
-  //     children:
-  //         [
-  //             {
-  //                 path: ":id",
-  //                 component: ProductDetailComponent
-  //             }
-  //         ]
-  // },
-  // La ruta comodin debe ir siempre al final
+  {
+    path: 'games',
+    loadChildren: () => import('./games/games.module').then(m => m.GamesModule)
+  },
   { path: '**', component: NotFoundComponent },
 ];
