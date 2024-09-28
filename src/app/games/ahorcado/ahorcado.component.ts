@@ -10,13 +10,25 @@ import { ChatComponent } from '../../components/chat/chat.component';
   styleUrls: ['./ahorcado.component.css'],
 })
 export class AhorcadoComponent implements OnInit {
-  wordToGuess: string = 'independiente';
+  words: string[] = [
+    'independiente',
+    'programacion',
+    'angular',
+    'typescript',
+    'desarrollo',
+    'javascript',
+    'tecnologia',
+    'software',
+  ];
+  wordToGuess: string = '';
   displayWord: string[] = [];
   incorrectGuesses: number = 0;
   maxIncorrectGuesses: number = 6;
   guessedLetters: string[] = [];
   alphabet: string[] = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  
+  gameWon: boolean = false;
+  points: number = 10;
+
   ngOnInit() {
     this.initializeGame();
   }
@@ -24,13 +36,20 @@ export class AhorcadoComponent implements OnInit {
   constructor() {}
 
   initializeGame() {
+    this.wordToGuess = this.getRandomWord();
     this.displayWord = this.wordToGuess.split('').map(() => '_');
     this.guessedLetters = [];
     this.incorrectGuesses = 0;
+    this.gameWon = false;
+  }
+
+  getRandomWord(): string {
+    const randomIndex = Math.floor(Math.random() * this.words.length);
+    return this.words[randomIndex];
   }
 
   guessLetter(letter: string) {
-    if (this.guessedLetters.includes(letter)) {
+    if (this.guessedLetters.includes(letter) || this.gameWon) {
       return;
     }
 
@@ -44,6 +63,11 @@ export class AhorcadoComponent implements OnInit {
       });
     } else {
       this.incorrectGuesses++;
+      this.points--;
+    }
+
+    if (this.isGameWon()) {
+      this.gameWon = true;
     }
   }
 
@@ -53,5 +77,13 @@ export class AhorcadoComponent implements OnInit {
 
   isGameOver(): boolean {
     return this.incorrectGuesses >= this.maxIncorrectGuesses;
+  }
+
+  restartGame() {
+    this.points += 10;
+    if (this.isGameOver()) {
+      this.points = 10;
+    }
+    this.initializeGame();
   }
 }
