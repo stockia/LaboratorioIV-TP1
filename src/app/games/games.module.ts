@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { GamesRoutingModule } from './games-routing.module';
 import { AhorcadoComponent } from './ahorcado/ahorcado.component';
 import { MayorMenorComponent } from './mayor-menor/mayor-menor.component';
+import { provideHttpClient } from '@angular/common/http';
+
 
 @NgModule({
   imports: [
@@ -11,6 +13,7 @@ import { MayorMenorComponent } from './mayor-menor/mayor-menor.component';
     GamesRoutingModule,
     AhorcadoComponent,
     MayorMenorComponent
-  ]
+  ],
+  providers: [provideHttpClient()]
 })
 export class GamesModule { }
