@@ -19,7 +19,7 @@ export class SimonComponent implements OnInit {
   gameStarted: boolean = false;
   isGameOver: boolean = false;
   hasWon: boolean = false;
-  maxSequences: number = 2;
+  maxSequences: number = 15;
   hasWonOne: boolean = false;
   isSavingScore: boolean = false;
 
