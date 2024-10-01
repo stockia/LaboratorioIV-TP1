@@ -1,8 +1,24 @@
-.card {
-    border: 2px solid #000;
-  }
-  
-  .card-body {
-    font-size: 48px;
-  }
-  
+.game-container {
+  background-color: #383838b8;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+h1 {
+  text-shadow: 3px 2px 6px #000000;
+}
+
+p, h1 {
+  color: white;
+}
+.card-body img {
+  width: 100px;
+  height: 150px;
+}
+
+.prev-card-body img {
+  width: 90px;
+  height: 135px;
+}
+
+

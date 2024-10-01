@@ -14,13 +14,14 @@ import { ChatComponent } from '../chat/chat.component';
 })
 export class HomeComponent implements OnInit {
   username: string = '';
-  games: { id: number, title: string, description: string, gameLink: string, imgUrl: string}[] = [
+  games: { id: number, title: string, description: string, gameLink: string, imgUrl: string, ownGame: boolean }[] = [
     { 
       id: 1,
       title: 'Ahorcado', 
       description: 'Descubre la palabra secreta antes de acabar tus vidas', 
       gameLink: '/games/ahorcado',
-      imgUrl: '../../assets/games/hangman.webp'  
+      imgUrl: '../../assets/games/hangman.webp',
+      ownGame: false,
     },
     { 
       id: 2, 
@@ -28,20 +29,23 @@ export class HomeComponent implements OnInit {
       description: 'Description 2', 
       gameLink: '/games/mayor-menor',
       imgUrl: '../../assets/games/h_or_l.webp',
+      ownGame: false,
     },
     { 
       id: 3, 
       title: 'Preguntados', 
       description: 'Description 3', 
-      gameLink: '',
+      gameLink: '/games/preguntados',
       imgUrl: '../../assets/games/preguntados.webp',
+      ownGame: false,
     },
     { 
       id: 4, 
       title: 'Juego Propio', 
       description: 'Description 4', 
-      gameLink: '',
+      gameLink: '/games/simon',
       imgUrl: '../../assets/games/own_game.webp',
+      ownGame: true,
     }
   ];
 

@@ -1,77 +1,112 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChatComponent } from '../../components/chat/chat.component';
+import { CardService, DeckResponse, CardResponse } from '../../services/card-game.service';
+import { firstValueFrom } from 'rxjs';
+import { Auth } from '@angular/fire/auth';
+import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-mayor-menor',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ChatComponent],
   templateUrl: './mayor-menor.component.html',
-  styleUrl: './mayor-menor.component.css'
+  styleUrls: ['./mayor-menor.component.css']
 })
 export class MayorMenorComponent implements OnInit {
-  deck: number[] = [];
-  currentCard: number = 0;
-  nextCard: number = 0;
+  deckId: string = '';
   points: number = 0;
   message: string = '';
   gameOver: boolean = false;
+  currentCard: any;
+  newCard: any;
+  prevCard: any;
+  isLoadingCurrentCard: boolean = true;
+  isSavingScore: boolean = false;
+  hasWonOne: boolean = false;
+
+  constructor(private cardService: CardService, private firestore: Firestore, public auth: Auth) {}
 
   ngOnInit() {
     this.startGame();
+
   }
 
-  constructor() { }
-
-  startGame() {
-    this.deck = this.generateDeck();
-    this.shuffleDeck();
-    this.points = 0;
-    this.gameOver = false;
-    this.drawInitialCard();
-    this.message = '¿Será la siguiente carta mayor o menor?';
-  }
-
-  generateDeck(): number[] {
-    return Array.from({ length: 13}, (_, i) => i + 1);
-  }
-
-  shuffleDeck() {
-    this.deck.sort(() => Math.random() - 0.5);
-  }
-
-  drawInitialCard() {
-    this.currentCard = this.deck.pop() || 0;
-  }
-
-  guess(isHigher: boolean) {
-    if (this.gameOver) {
-      return;
+  async startGame() {
+    try {
+      const response: DeckResponse = await firstValueFrom(this.cardService.getDeck());
+      this.hasWonOne = false;
+      this.deckId = response.deck_id;
+      this.points = 10;
+      await this.drawCard();
+      this.currentCard = this.newCard;
+      this.isLoadingCurrentCard = false;
+      this.message = '¡Mazo de cartas creado! ¿Listo para jugar?';
+    } catch (error) {
+      console.error('Error fetching deck:', error);
+      this.message = 'Error al obtener el mazo de cartas.';
     }
+  }
 
-    this.nextCard = this.deck.pop() || 0;
-
-    if (this.nextCard === 0) {
-      this.message = 'No hay más cartas en el mazo. ¡Fin del juego!';
-      this.gameOver = true;
-      return;
-    }
-
-    const isCorrect = isHigher
-      ? this.nextCard > this.currentCard
-      : this.nextCard < this.currentCard;
-
-    if (isCorrect) {
-      this.points++;
-      this.message = '¡Correcto!';
-    } else {
-      if (this.points > 0) {
-        this.points--;
-        this.message = '¡Incorrecto, perdes un punto!';
-      } else {
-        this.message = '¡Incorrecto!';
+  async drawCard(): Promise<void> {
+    if (this.deckId) {
+      try {
+        const response: CardResponse = await firstValueFrom(this.cardService.getOneCard(this.deckId));
+        if (response.success) {
+          this.newCard = response.cards[0];
+        } else {
+          this.message = 'No se pudo dibujar la carta.';
+        }
+      } catch (error) {
+        console.error('Error drawing card:', error);
+        this.message = 'Error al dibujar la carta.';
       }
     }
+  }
+
+  async guess(isHigher: boolean) {
+    this.isLoadingCurrentCard = true;
+    await this.drawCard();
     
-    this.currentCard = this.nextCard;
+    if (this.currentCard && this.newCard) {
+      const currentCardValue = parseInt(this.currentCard.value);
+      const newCardValue = parseInt(this.newCard.value);
+  
+      if (isHigher && newCardValue > currentCardValue) {
+        this.points += 1;
+        this.hasWonOne = true;
+        this.message = '¡Correcto! La siguiente carta es mayor.';
+      } else if (!isHigher && newCardValue < currentCardValue) {
+        this.points += 1;
+        this.hasWonOne = true;
+        this.message = '¡Correcto! La siguiente carta es menor.';
+      } else {
+        if (this.points > 0) {
+          this.points -= 1;
+        }
+        this.message = '¡Incorrecto! La siguiente carta no es lo que pensabas.';
+      }
+      this.prevCard = this.currentCard
+      this.currentCard = this.newCard;
+    } else {
+      this.message = 'No se pudo obtener la siguiente carta.';
+    }
+    this.isLoadingCurrentCard = false;
+  }
+
+  async finishGame() {
+    const user = this.auth.currentUser;
+    if (user) {
+      this.isSavingScore = true;
+      const score = {
+        puntuacion: this.points,
+        usuario: user.email,
+        fecha: new Date(),
+        juego: 'Mayor-Menor'
+      }
+      let collectionDB = collection(this.firestore, 'users-scores');
+      await addDoc(collectionDB, score);
+      this.isSavingScore = false;
+    }
   }
 }

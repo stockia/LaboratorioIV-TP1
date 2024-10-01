@@ -29,8 +29,8 @@ export class GameCardComponent {
     return this.gameData?.imgUrl;
   }
 
-  get year() {
-    return '2024';
+  get ownGame() {
+    return this.gameData?.ownGame;
   }
 
   get gameLink() {

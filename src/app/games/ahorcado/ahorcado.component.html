@@ -1,4 +1,4 @@
-<div class="container text-center mt-5">
+<div class="container text-center mt-5 game-container">
     <h1>Ahorcado</h1>
     <div class="my-4">
       <h2>
@@ -8,32 +8,53 @@
   
     <div class="my-4">
       <p>Intentos incorrectos: {{ incorrectGuesses }} / {{ maxIncorrectGuesses }}</p>
+      <p>Puntos: {{ points }}</p>
+    </div>
+
+    <div class="person">
+      <div class="head person-emoji" *ngIf="incorrectGuesses >= 1">😵</div>
+      <div class="upper-body">
+        <div class="left-arm person-emoji" *ngIf="incorrectGuesses >= 3">🤛🏼</div>
+        <div class="body person-emoji" *ngIf="incorrectGuesses >= 2">👕</div>
+        <div class="right-arm person-emoji" *ngIf="incorrectGuesses >= 4">🤜🏼</div>
+      </div>
+      <div class="lower-body">
+        <div class="left-leg person-emoji" *ngIf="incorrectGuesses >= 5">🦵🏼</div>
+        <div class="right-leg person-emoji" *ngIf="incorrectGuesses >= 6">🦿</div>
+      </div>
     </div>
   
     <div class="my-4">
       <div class="d-flex flex-wrap justify-content-center">
         <button
           *ngFor="let letter of alphabet"
-          class="btn btn-outline-primary m-1"
-          [disabled]="guessedLetters.includes(letter) || isGameOver() || isGameWon()"
+          class="btn btn-outline-light m-1"
+          [disabled]="guessedLetters.includes(letter) || isGameOver() || gameWon"
           (click)="guessLetter(letter)"
         >
           {{ letter }}
+        </button>
+      </div>
+      <div class="mt-3">
+        <button class="btn btn-secondary" 
+        (click)="finishGame()"
+        [disabled]="!hasWonOne"
+        >
+          @if (isSavingScore) {Guardando resultado}
+          @else {Finalizar}
         </button>
       </div>
     </div>
   
     <div class="my-4">
       <div *ngIf="isGameWon()" class="alert alert-success">
-        ¡Felicidades! Has ganado.
+        ¡Felicidades! Has ganado. 
+        <button class="btn btn-secondary" (click)="restartGame()">Jugar de nuevo</button>
       </div>
       <div *ngIf="isGameOver()" class="alert alert-danger">
         ¡Has perdido! La palabra era: {{ wordToGuess }}
+        <button class="btn btn-secondary" (click)="restartGame()">Reiniciar Juego</button>
       </div>
-    </div>
-  
-    <div class="my-4">
-      <button class="btn btn-secondary" (click)="initializeGame()">Reiniciar Juego</button>
     </div>
   </div>
   <app-chat></app-chat>

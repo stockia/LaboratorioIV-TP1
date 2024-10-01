@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    height: 85vh;
+    background-image: url('../../../assets/login/pattern-login.jpg');
   }
   
   .login-form {

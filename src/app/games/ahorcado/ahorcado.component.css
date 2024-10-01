@@ -1,3 +1,9 @@
+.game-container {
+  background-color: #383838b8;
+  border-radius: 10px;
+  padding: 20px;
+}
+
 h2 span {
     display: inline-block;
     width: 30px;
@@ -7,6 +13,10 @@ h2 span {
     margin: 0 2px;
   }
 
+  h1 {
+    text-shadow: 3px 2px 6px #000000;
+  }
+
   h1, h2, p {
     color: white;
   }
@@ -14,4 +24,23 @@ h2 span {
   button[disabled] {
     opacity: 0.6;
   }
-  
+
+.person {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upper-body {
+    display: flex;
+    justify-content: center;
+}
+
+.lower-body {
+    display: flex;
+    justify-content: center;
+}
+
+.person-emoji {
+  font-size: 1.8rem;
+}

@@ -24,6 +24,10 @@ export class NavbarComponent {
     return this.auth.currentUser !== null;
   }
 
+  get userName(): string {
+    return this.auth.currentUser?.email || 'no logueado';
+  }
+
   goTo(path: string) {
     this.router.navigate([path]);
   }

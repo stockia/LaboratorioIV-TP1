@@ -10,13 +10,15 @@ import {
   VERSION,
   Version,
   makeEnvironmentProviders,
-  queueScheduler,
   setClassMetadata,
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-EKNKJDXO.js";
+} from "./chunk-MZL7XTB6.js";
+import {
+  queueScheduler
+} from "./chunk-FPXG7P7U.js";
 import {
   Observable,
   __async,
@@ -30,7 +32,7 @@ import {
   subscribeOn,
   tap,
   timer
-} from "./chunk-3MFW7UDR.js";
+} from "./chunk-OQY3O447.js";
 
 // node_modules/@firebase/util/dist/index.esm2017.js
 var stringToByteArray$1 = function(str) {
@@ -2928,4 +2930,4 @@ firebase/app/dist/esm/index.esm.js:
    * limitations under the License.
    *)
 */
-//# sourceMappingURL=chunk-SKWILZPQ.js.map
+//# sourceMappingURL=chunk-ONWLCRQW.js.map
