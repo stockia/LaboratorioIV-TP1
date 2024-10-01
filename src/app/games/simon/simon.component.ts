@@ -1,22 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChatComponent } from '../../components/chat/chat.component';
+import { Auth } from '@angular/fire/auth';
+import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-simon',
   standalone: true,
   templateUrl: './simon.component.html',
   styleUrl: './simon.component.css',
-  imports: [CommonModule],
+  imports: [CommonModule, ChatComponent],
 })
 export class SimonComponent implements OnInit {
   colors: string[] = ['red', 'green', 'blue', 'yellow'];
   sequence: string[] = [];
   userSequence: string[] = [];
-  score: number = 0;
+  points: number = 0;
   gameStarted: boolean = false;
   isGameOver: boolean = false;
   hasWon: boolean = false;
-  maxSequences: number = 3;
+  maxSequences: number = 2;
+  hasWonOne: boolean = false;
+  isSavingScore: boolean = false;
+
+  constructor(public auth: Auth, private firestore: Firestore) {}
 
   ngOnInit(): void {
     this.resetGame();
@@ -25,7 +32,7 @@ export class SimonComponent implements OnInit {
   startGame(): void {
     this.sequence = [];
     this.userSequence = [];
-    this.score = 0;
+    this.points = 0;
     this.gameStarted = true;
     this.addToSequence();
   }
@@ -37,10 +44,11 @@ export class SimonComponent implements OnInit {
   resetGame(): void {
     this.sequence = [];
     this.userSequence = [];
-    this.score = 0;
+    this.points = 0;
     this.gameStarted = false;
     this.hasWon = false;
-    this.isGameOver= false;
+    this.isGameOver = false;
+    this.hasWonOne = false;
   } 
 
   addToSequence(): void {
@@ -63,14 +71,16 @@ export class SimonComponent implements OnInit {
     }
     
     if (this.userSequence.length === this.sequence.length) {
-      this.score += 10;
+      this.points += 10;
       this.userSequence = [];
       this.addToSequence();
+      this.hasWonOne = true;
     }
   }
 
   gameOver(hasWon: boolean): void {
     if (!hasWon) {
+      this.hasWonOne = false;
       this.isGameOver = true;
     } else {
       this.hasWon = true;
@@ -105,6 +115,24 @@ export class SimonComponent implements OnInit {
       this.userSequence.push(color);
       this.flashColor(color);
       this.checkSequence();
+    }
+  }
+
+  async finishGame() {
+    const user = this.auth.currentUser;
+    if (user) {
+      this.gameStarted = false;
+      this.isSavingScore = true;
+      const score = {
+        puntuacion: this.points,
+        usuario: user.email,
+        fecha: new Date(),
+        juego: 'Simon'
+      };
+      let collectionDB = collection(this.firestore, 'users-scores');
+      await addDoc(collectionDB, score);
+      this.isSavingScore = false;
+      this.resetGame();
     }
   }
 }

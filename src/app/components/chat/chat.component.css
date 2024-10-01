@@ -15,3 +15,7 @@
 .message-bubble {
     max-width: 80%;
 }
+
+.own-msg {
+    color: white;
+}

@@ -3,5 +3,6 @@
     /* display: flex; */
     flex-direction: column;
     height: 100%;
-    background-color: #333;
+    /* background-color: #333; */
+    background-image: url('../assets/app/app-bg.jpg');
   }

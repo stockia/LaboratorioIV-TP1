@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from '../../components/chat/chat.component';
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-ahorcado',
@@ -25,15 +27,17 @@ export class AhorcadoComponent implements OnInit {
   incorrectGuesses: number = 0;
   maxIncorrectGuesses: number = 6;
   guessedLetters: string[] = [];
+  hasWonOne: boolean = false;
   alphabet: string[] = 'abcdefghijklmnopqrstuvwxyz'.split('');
   gameWon: boolean = false;
   points: number = 10;
+  isSavingScore: boolean = false;
 
   ngOnInit() {
     this.initializeGame();
   }
 
-  constructor() {}
+  constructor(private firestore: Firestore, public auth: Auth) {}
 
   initializeGame() {
     this.wordToGuess = this.getRandomWord();
@@ -72,7 +76,11 @@ export class AhorcadoComponent implements OnInit {
   }
 
   isGameWon(): boolean {
-    return this.displayWord.join('') === this.wordToGuess;
+    const result = this.displayWord.join('') === this.wordToGuess;
+    if (result) {
+      this.hasWonOne = true;
+    }
+    return result;
   }
 
   isGameOver(): boolean {
@@ -83,7 +91,24 @@ export class AhorcadoComponent implements OnInit {
     this.points += 10;
     if (this.isGameOver()) {
       this.points = 10;
+      this.hasWonOne = false;
     }
     this.initializeGame();
+  }
+
+  async finishGame() {
+    const user = this.auth.currentUser;
+    if (user) {
+      this.isSavingScore = true;
+      const score = {
+        puntuacion: this.points,
+        usuario: user.email,
+        fecha: new Date(),
+        juego: 'Ahorcado'
+      };
+      let collectionDB = collection(this.firestore, 'users-scores');
+      await addDoc(collectionDB, score);
+      this.isSavingScore = false;
+    }
   }
 }

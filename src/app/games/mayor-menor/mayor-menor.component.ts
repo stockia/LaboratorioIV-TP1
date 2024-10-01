@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChatComponent } from '../../components/chat/chat.component';
 import { CardService, DeckResponse, CardResponse } from '../../services/card-game.service';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '@angular/fire/auth';
+import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-mayor-menor',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ChatComponent],
   templateUrl: './mayor-menor.component.html',
   styleUrls: ['./mayor-menor.component.css']
 })
@@ -19,8 +22,10 @@ export class MayorMenorComponent implements OnInit {
   newCard: any;
   prevCard: any;
   isLoadingCurrentCard: boolean = true;
+  isSavingScore: boolean = false;
+  hasWonOne: boolean = false;
 
-  constructor(private cardService: CardService) {}
+  constructor(private cardService: CardService, private firestore: Firestore, public auth: Auth) {}
 
   ngOnInit() {
     this.startGame();
@@ -30,6 +35,7 @@ export class MayorMenorComponent implements OnInit {
   async startGame() {
     try {
       const response: DeckResponse = await firstValueFrom(this.cardService.getDeck());
+      this.hasWonOne = false;
       this.deckId = response.deck_id;
       this.points = 10;
       await this.drawCard();
@@ -68,9 +74,11 @@ export class MayorMenorComponent implements OnInit {
   
       if (isHigher && newCardValue > currentCardValue) {
         this.points += 1;
+        this.hasWonOne = true;
         this.message = '¡Correcto! La siguiente carta es mayor.';
       } else if (!isHigher && newCardValue < currentCardValue) {
         this.points += 1;
+        this.hasWonOne = true;
         this.message = '¡Correcto! La siguiente carta es menor.';
       } else {
         if (this.points > 0) {
@@ -84,5 +92,21 @@ export class MayorMenorComponent implements OnInit {
       this.message = 'No se pudo obtener la siguiente carta.';
     }
     this.isLoadingCurrentCard = false;
+  }
+
+  async finishGame() {
+    const user = this.auth.currentUser;
+    if (user) {
+      this.isSavingScore = true;
+      const score = {
+        puntuacion: this.points,
+        usuario: user.email,
+        fecha: new Date(),
+        juego: 'Mayor-Menor'
+      }
+      let collectionDB = collection(this.firestore, 'users-scores');
+      await addDoc(collectionDB, score);
+      this.isSavingScore = false;
+    }
   }
 }

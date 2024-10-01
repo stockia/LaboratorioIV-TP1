@@ -1,4 +1,4 @@
-<div class="container text-center mt-5">
+<div class="container text-center mt-5 game-container">
     <h1>Ahorcado</h1>
     <div class="my-4">
       <h2>
@@ -28,11 +28,20 @@
       <div class="d-flex flex-wrap justify-content-center">
         <button
           *ngFor="let letter of alphabet"
-          class="btn btn-outline-primary m-1"
+          class="btn btn-outline-light m-1"
           [disabled]="guessedLetters.includes(letter) || isGameOver() || gameWon"
           (click)="guessLetter(letter)"
         >
           {{ letter }}
+        </button>
+      </div>
+      <div class="mt-3">
+        <button class="btn btn-secondary" 
+        (click)="finishGame()"
+        [disabled]="!hasWonOne"
+        >
+          @if (isSavingScore) {Guardando resultado}
+          @else {Finalizar}
         </button>
       </div>
     </div>

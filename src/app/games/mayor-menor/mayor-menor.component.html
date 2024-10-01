@@ -1,4 +1,4 @@
-<div class="container text-center mt-5">
+<div class="container text-center mt-5 game-container">
     <h1>Juego Mayor o Menor</h1>
   
     <div class="my-4 d-flex align-items-center justify-content-center">
@@ -35,6 +35,19 @@
     </div>
   
     <div class="my-4">
-      <button class="btn btn-secondary" (click)="startGame()">Reiniciar Juego</button>
+      <button class="btn btn-secondary m-2" 
+        (click)="startGame()"
+        [disabled]="isSavingScore"
+      >
+        Reiniciar Juego
+      </button>
+      <button class="btn btn-secondary m-2"
+        (click)="finishGame()"
+        [disabled]="!hasWonOne || isSavingScore"
+      >
+        @if (isSavingScore) {Guardando resultado}
+        @else {Finalizar}
+      </button>
     </div>
   </div>
+  <app-chat></app-chat>

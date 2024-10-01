@@ -24,8 +24,8 @@
         <div
           class="mb-2 p-2 rounded message-bubble"
           [ngClass]="{
-            'bg-primary text-white ms-auto text-end': message.user === currentUser,
-            'bg-light text-dark text-start': message.user !== currentUser
+            'bg-primary text-white ms-auto text-end own-msg': message.user === currentUser,
+            'bg-success text-white text-start': message.user !== currentUser
           }"
         >
           {{ message.message }}

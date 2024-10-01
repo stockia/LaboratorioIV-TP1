@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChatComponent } from '../../components/chat/chat.component';
 import { PreguntadosService, Character } from '../../services/preguntados.service';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '@angular/fire/auth';
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+
 @Component({
   selector: 'app-preguntados',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ChatComponent],
   templateUrl: './preguntados.component.html',
   styleUrl: './preguntados.component.css'
 })
@@ -17,9 +21,11 @@ export class PreguntadosComponent implements OnInit {
   otherCharacters: Character[] = [];
   isCorrect: boolean | null = null;
   isLoading: boolean = false;
-  startingPoints: number = 0;
+  points: number = 0;
+  hasWonOne: boolean = false;
+  isSavingScore: boolean = false;
 
-  constructor(private preguntadosService: PreguntadosService) {}
+  constructor(private preguntadosService: PreguntadosService, public auth: Auth, private firestore: Firestore) {}
 
   ngOnInit() {
     this.startGame();
@@ -89,12 +95,31 @@ export class PreguntadosComponent implements OnInit {
   handleGuess(option: string) {
     if (option === this.selectedCharacter.fullName) {
       this.isCorrect = true;
-      this.startingPoints += 1;
+      this.hasWonOne = true;
+      this.points += 1;
     } else {
       this.isCorrect = false;
-      if (this.startingPoints > 0) {
-        this.startingPoints -= 1;
+      if (this.points > 0) {
+        this.points -= 1;
       }
+    }
+  }
+
+  async finishGame() {
+    const user = this.auth.currentUser;
+    if (user) {
+      this.isSavingScore = true;
+      const score = {
+        puntuacion: this.points,
+        usuario: user.email,
+        fecha: new Date(),
+        juego: 'Preguntados'
+      }
+      let collectionDB = collection(this.firestore, 'users-scores');
+      await addDoc(collectionDB, score);
+      this.points = 0;
+      this.hasWonOne = false;
+      this.isSavingScore = false;
     }
   }
 
