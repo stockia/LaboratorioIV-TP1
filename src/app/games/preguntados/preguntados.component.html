@@ -1,0 +1,59 @@
+
+  <div class="container text-center mt-5 container-preguntados">
+    @if (isLoading) {
+      <div class="card-body d-flex flex-column align-items-center loader-container">
+        <div class="loader">
+        </div>
+      </div>
+    } @else {
+      <div class="card-body d-flex flex-column align-items-center character-card"
+      [ngClass]="{
+        'bg-success-transparent': isCorrect === true,
+        'bg-danger-transparent': isCorrect === false
+      }"
+      >
+        <div class="d-flex justify-content-center mt-5">
+          <img 
+            [src]="selectedCharacter.imageUrl"
+            alt="Character to guess" 
+            class="rounded-circle bg-light"
+            style="width: 150px; height: 150px; object-fit: cover;"
+          />
+        </div>
+      
+        <div class="w-100 mt-4">
+          <div class="row g-2">
+            <div class="col-12" *ngFor="let option of this.options">
+              <button 
+                (click)="handleGuess(option)"
+                [disabled]="isCorrect !== null"
+                [ngClass]="[
+                  'btn',
+                  'btn-character-name',
+                  isCorrect === null ? 'btn-outline-primary' : 
+                  (option === correctCharacterName ? 'btn-success' : 'btn-danger')
+                ]"
+              >
+                {{ option }}
+              </button>
+            </div>
+          </div>
+        </div>
+      
+        @if (isCorrect !== null) {
+          <div class="text-center mt-3" [ngClass]="{'text-success': isCorrect, 'text-danger': !isCorrect}">
+            {{ isCorrect ? '¡Correcto!' : 'Incorrecto. Inténtalo de nuevo.' }}
+          </div>
+        }
+
+        <div class="my-4">
+          <p class="h4">Puntos: {{ startingPoints }}</p>
+        </div>
+      
+        <button (click)="handleNextRound()" class="btn btn-primary mt-4 mb-5">
+          <i class="bi bi-shuffle me-2"></i> Siguiente ronda
+        </button>
+      </div>
+    }
+  </div>
+

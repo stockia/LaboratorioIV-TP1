@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-5">
+      <h1 class="text-center">Juego Simon</h1>
+      <div class="game-container"
+        [ngClass]="{
+          'bg-success-transparent': hasWon === true,
+          'bg-danger-transparent': isGameOver === true
+        }"
+      >
+        <div class="game-board d-grid pt-3 pb-1">
+          <div *ngFor="let color of colors" class="game-board-cell"
+            [style.background-color]="color" 
+            (click)="onColorClick(color)">
+          </div>
+        </div>
+        <div class="game-controls d-flex justify-content-center mt-2">
+          <button class="game-button btn btn-primary m-2" id="start" (click)="startGame()">Iniciar</button>
+          <button class="game-button btn btn-danger m-2" id="stop" (click)="stopGame()">Detener</button>
+          <button class="game-button btn btn-warning m-2" id="reset" (click)="resetGame()">Resetear</button>
+        </div>
+        <div class="game-score text-center">
+          <p>Puntuación: <span id="score">{{ score }}</span></p>
+        </div>
+        @if (isGameOver) {
+          <div class="game-result game-over text-center">
+            <p>Te equivocaste, el juego se terminó 😭</p>
+          </div>
+        } @else if (hasWon) {
+          <div class="game-result has-won text-center">
+            <p>Ganaste 💥🫨💥</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
