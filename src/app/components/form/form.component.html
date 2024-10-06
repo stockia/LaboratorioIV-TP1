@@ -1,0 +1,93 @@
+<form [formGroup]="surveyForm" class="custom-form">
+	<button type="button" class="close-btn" (click)="close()">
+		<i class="bi bi-x"></i>
+	</button>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Nombre</label>
+    <input type="text" class="form-control" id="firstNameInput" name="firstName" formControlName="firstName">
+		@if (surveyForm.get('firstName')?.errors?.['required'] && surveyForm.get('lastName')?.touched) {
+			<small class="text-danger">
+				El campo es requerido
+			</small>
+		}
+	</div>
+
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Apellido</label>
+    <input type="text" class="form-control" id="lastNameInput" formControlName="lastName">
+		@if (surveyForm.get('lastName')?.errors?.['required'] && surveyForm.get('lastName')?.touched) {
+			<small class="text-danger">
+				El campo es requerido
+			</small>
+		}
+	</div>
+
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Correo electrónico</label>
+    <input type="email" class="form-control" id="emailInput" formControlName="email" readonly>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Edad</label>
+    <input type="number" class="form-control" id="ageInput" formControlName="age">
+		@if (surveyForm.get('age')?.errors?.['required'] && surveyForm.get('lastName')?.touched) {
+			<small class="text-danger">
+				El campo es requerido
+			</small>
+		}
+	</div>
+
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">Celular</label>
+    <input type="number" class="form-control" id="cellphoneInput" formControlName="cellphone">
+		@if (surveyForm.get('cellphone')?.errors?.['required'] && surveyForm.get('lastName')?.touched) {
+			<small class="text-danger">
+				El campo es requerido
+			</small>
+		}
+	</div>
+
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">¿Qué puntuación le darías al juego?</label>
+    <select multiple class="form-control" id="question1Input" formControlName="question1">
+      <option>⭐️</option>
+      <option>⭐️⭐️</option>
+      <option>⭐️⭐️⭐️</option>
+      <option>⭐️⭐️⭐️⭐️</option>
+      <option>⭐️⭐️⭐️⭐️⭐️</option>
+    </select>
+		@if (surveyForm.get('question1')?.errors?.['required'] && surveyForm.get('lastName')?.touched) {
+			<small class="text-danger">
+				El campo es requerido
+			</small>
+		}
+	</div>
+	
+  <div class="form-group">
+    <label for="question3Input">¿Qué tan probable es que vuelvas a jugar?</label>
+    <select class="form-control" id="question3Input" formControlName="question3">
+      <option value="poco probable">Poco probable</option>
+      <option value="seguramente lo haga">Seguramente lo haga</option>
+      <option value="de inmediato">Voy a volver a jugar de inmediato</option>
+    </select>
+		@if (surveyForm.get('question3')?.errors?.['required'] && surveyForm.get('lastName')?.touched) {
+			<small class="text-danger">
+				El campo es requerido
+			</small>
+		}
+	</div>
+
+  <div class="form-group">
+    <label for="question2Input">Sugerencias</label>
+    <textarea class="form-control no-resize" id="question2Input" rows="3" formControlName="question2"></textarea>
+		@if (surveyForm.get('question2')?.errors?.['required'] && surveyForm.get('lastName')?.touched) {
+			<small class="text-danger">
+				El campo es requerido
+			</small>
+		}
+	</div>
+
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary mt-2" [disabled]="surveyForm.invalid" (click)="onSubmit()">Enviar</button>
+  </div>
+</form>

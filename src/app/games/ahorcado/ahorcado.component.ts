@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
+import { FormComponent } from '../../components/form/form.component';
 
 @Component({
   selector: 'app-ahorcado',
   standalone: true,
-  imports: [CommonModule, ChatComponent],
+  imports: [CommonModule, ChatComponent, FormComponent],
   templateUrl: './ahorcado.component.html',
   styleUrls: ['./ahorcado.component.css'],
 })
@@ -32,6 +33,7 @@ export class AhorcadoComponent implements OnInit {
   gameWon: boolean = false;
   points: number = 10;
   isSavingScore: boolean = false;
+  openForm: boolean = false;
 
   ngOnInit() {
     this.initializeGame();
@@ -108,7 +110,12 @@ export class AhorcadoComponent implements OnInit {
       };
       let collectionDB = collection(this.firestore, 'users-scores');
       await addDoc(collectionDB, score);
+      this.openForm = true;
       this.isSavingScore = false;
     }
+  }
+
+  onCloseForm() {
+    this.openForm = false;
   }
 }

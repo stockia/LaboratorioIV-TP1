@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from '../../components/chat/chat.component';
+import { FormComponent } from '../../components/form/form.component';
 import { Auth } from '@angular/fire/auth';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 
@@ -9,7 +10,7 @@ import { addDoc, collection, Firestore } from '@angular/fire/firestore';
   standalone: true,
   templateUrl: './simon.component.html',
   styleUrl: './simon.component.css',
-  imports: [CommonModule, ChatComponent],
+  imports: [CommonModule, ChatComponent, FormComponent],
 })
 export class SimonComponent implements OnInit {
   colors: string[] = ['red', 'green', 'blue', 'yellow'];
@@ -22,6 +23,7 @@ export class SimonComponent implements OnInit {
   maxSequences: number = 15;
   hasWonOne: boolean = false;
   isSavingScore: boolean = false;
+  openForm: boolean = false;
 
   constructor(public auth: Auth, private firestore: Firestore) {}
 
@@ -131,8 +133,13 @@ export class SimonComponent implements OnInit {
       };
       let collectionDB = collection(this.firestore, 'users-scores');
       await addDoc(collectionDB, score);
+      this.openForm = true;
       this.isSavingScore = false;
       this.resetGame();
     }
+  }
+
+  onCloseForm() {
+    this.openForm = false;
   }
 }

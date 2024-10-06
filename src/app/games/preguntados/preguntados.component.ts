@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { PreguntadosService, Character } from '../../services/preguntados.service';
+import { FormComponent } from '../../components/form/form.component';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
@@ -9,7 +10,7 @@ import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 @Component({
   selector: 'app-preguntados',
   standalone: true,
-  imports: [CommonModule, ChatComponent],
+  imports: [CommonModule, ChatComponent, FormComponent],
   templateUrl: './preguntados.component.html',
   styleUrl: './preguntados.component.css'
 })
@@ -24,6 +25,7 @@ export class PreguntadosComponent implements OnInit {
   points: number = 0;
   hasWonOne: boolean = false;
   isSavingScore: boolean = false;
+  openForm: boolean = false;
 
   constructor(private preguntadosService: PreguntadosService, public auth: Auth, private firestore: Firestore) {}
 
@@ -119,6 +121,7 @@ export class PreguntadosComponent implements OnInit {
       await addDoc(collectionDB, score);
       this.points = 0;
       this.hasWonOne = false;
+      this.openForm = true;
       this.isSavingScore = false;
     }
   }
@@ -129,5 +132,9 @@ export class PreguntadosComponent implements OnInit {
 
   get correctCharacterName() {
     return this.selectedCharacter.fullName;
+  }
+
+  onCloseForm() {
+    this.openForm = false;
   }
 }

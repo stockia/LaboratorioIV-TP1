@@ -70,5 +70,12 @@
       </div>
     }
   </div>
+
+  @if (openForm) {
+    <div class="overlay">
+      <app-form (closeForm)="onCloseForm()"></app-form>
+    </div>
+  }
+  
   <app-chat></app-chat>
 
