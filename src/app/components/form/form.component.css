@@ -4,8 +4,6 @@ body {
     align-items: center;
     height: 80vh;
     margin: 0;
-    /* Evita el scroll cuando el formulario está activo */
-    /* overflow: hidden; */
 }
 
 .custom-form {
@@ -13,7 +11,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: auto;
     position: relative;
-    padding: 20px; /* Añadimos padding para separar el contenido del borde */
+    padding: 20px;
     padding-top: 40px;
 }
 
