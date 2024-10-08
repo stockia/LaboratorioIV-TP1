@@ -12,16 +12,7 @@
     </div>
 
     <div class="person">
-      <div class="head person-emoji" *ngIf="incorrectGuesses >= 1">😵</div>
-      <div class="upper-body">
-        <div class="left-arm person-emoji" *ngIf="incorrectGuesses >= 3">🤛🏼</div>
-        <div class="body person-emoji" *ngIf="incorrectGuesses >= 2">👕</div>
-        <div class="right-arm person-emoji" *ngIf="incorrectGuesses >= 4">🤜🏼</div>
-      </div>
-      <div class="lower-body">
-        <div class="left-leg person-emoji" *ngIf="incorrectGuesses >= 5">🦵🏼</div>
-        <div class="right-leg person-emoji" *ngIf="incorrectGuesses >= 6">🦿</div>
-      </div>
+      <img src="assets/games/hangman/error-{{ incorrectGuesses }}.png" alt="Imagen del ahorcado" class="img-fluid hangman-image">
     </div>
   
     <div class="my-4">
