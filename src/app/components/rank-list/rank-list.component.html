@@ -1,0 +1,23 @@
+<div class="container mt-3">
+  <h1 class="text-center">Resultados del Juego</h1>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Juego</th>
+          <th>Puntaje</th>
+          <th>Usuario</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let score of topScores">
+          <td>{{ score.juego }}</td>
+          <td>{{ score.puntuacion }}</td>
+          <td>{{ score.usuario }}</td>
+          <td>{{ formatDate(score.fecha) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

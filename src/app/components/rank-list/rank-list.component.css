@@ -1,0 +1,13 @@
+.container {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+h1 {
+    text-shadow: 3px 2px 6px #000000;
+    color: white;
+}
