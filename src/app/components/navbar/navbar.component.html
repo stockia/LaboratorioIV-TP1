@@ -5,6 +5,9 @@
     </button>
     @if (isLoggedIn) {
       {{userName}}
+      <button routerLink="form" routerLinkActive="active-route" class="logout-btn">
+        Formulario
+      </button>
       <button routerLink="rank-list" routerLinkActive="active-route" class="logout-btn">
         Puntajes
       </button>

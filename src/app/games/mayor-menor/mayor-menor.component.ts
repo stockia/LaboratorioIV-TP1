@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { CardService, DeckResponse, CardResponse } from '../../services/card-game.service';
-import { FormComponent } from '../../components/form/form.component';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
@@ -10,7 +9,7 @@ import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 @Component({
   selector: 'app-mayor-menor',
   standalone: true,
-  imports: [CommonModule, ChatComponent, FormComponent],
+  imports: [CommonModule, ChatComponent],
   templateUrl: './mayor-menor.component.html',
   styleUrls: ['./mayor-menor.component.css']
 })
@@ -25,7 +24,6 @@ export class MayorMenorComponent implements OnInit {
   isLoadingCurrentCard: boolean = true;
   isSavingScore: boolean = false;
   hasWonOne: boolean = false;
-  openForm: boolean = false;
 
   constructor(private cardService: CardService, private firestore: Firestore, public auth: Auth) {}
 
@@ -108,12 +106,7 @@ export class MayorMenorComponent implements OnInit {
       }
       let collectionDB = collection(this.firestore, 'users-scores');
       await addDoc(collectionDB, score);
-      this.openForm = true;
       this.isSavingScore = false;
     }
-  }
-
-  onCloseForm() {
-    this.openForm = false;
   }
 }

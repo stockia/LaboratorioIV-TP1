@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { authGuard } from './guards/auth-guard.guard';
 import { RankListComponent } from './components/rank-list/rank-list.component';
+import { FormComponent } from './components/form/form.component';
 
 export const routes: Routes = [
   // Si le ponemos 'prefix' nos va a arrojar un error en la consola de redireccion infinita
@@ -15,6 +16,11 @@ export const routes: Routes = [
   { 
     path: 'home', 
     component: HomeComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'form',
+    component: FormComponent,
     canActivate: [authGuard]
   },
   {

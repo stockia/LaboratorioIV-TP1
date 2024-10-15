@@ -1,6 +1,7 @@
 .container-preguntados {
     min-width: 25%;
     max-width: 50%;
+    height: 50vh;
 }
 
 .loader-container {
